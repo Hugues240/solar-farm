@@ -23,13 +23,18 @@ class Player:
             # below is a simple example
             
         if time==0:
-            return 0 
-                    
-        elif time>=12 and time<=44:
-            return -min(self.battery_stock[time-1],self.max_load*self.dt)
-                
-        else:
-            return 0.5*self.sun[time-1]*self.dt
+            return 0
+            
+        elif self.prices["sale"][time-1]>0.07 : # si les prix sont eleves
+            return(0.1*sun[time-1]) # on garde 0.1 de ce qu'on preduit, le reste est vendu
+            
+        elif self.imbalance["sale_cover"][time-1]==1 : # si la demande n'était pas satisfaite mais que les prix sont bas (propabalement la nuit)
+            return (-0.2*self.max_load) # on vend un cinquième de ce qu'on peut
+            
+        else : # la demande est satisfaite et les prix sont bas
+            return self.sun[time-1] # on stocke 
+            
+        return (0)
 
     def update_battery_stock(self, time,load):
             if abs(load) > self.max_load:
