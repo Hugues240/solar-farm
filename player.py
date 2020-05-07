@@ -26,7 +26,7 @@ class Player:
             return 0
             
         elif self.prices["sale"][time-1]>0.07 : # si les prix sont eleves
-            return(0.1*sun[time-1]) # on garde 0.1 de ce qu'on preduit, le reste est vendu
+            return(0.1*self.sun[time-1]) # on garde 0.1 de ce qu'on preduit, le reste est vendu
             
         elif self.imbalance["sale_cover"][time-1]==1 : # si la demande n'était pas satisfaite mais que les prix sont bas (propabalement la nuit)
             return (-0.2*self.max_load) # on vend un cinquième de ce qu'on peut
