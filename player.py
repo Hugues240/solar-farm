@@ -24,13 +24,13 @@ class Player:
         
         #A la fin du jour on vend à fond    
         if time>=40 and time<=44:
-            return(-self.battery_stock[time]-self.sun[time-1])
+            return(-self.battery_stock[time-1]-self.sun[time-1])
         elif time<=12 or time>=44:
             return(self.max_load)
         
         #Sinon on vend ce qu'on produit plus 1/16 de nos batteries (car 16 pas de temps
         #le jour)    
-        return (-self.sun[time-1]-self.battery_stock[time]*0.0625)
+        return (-self.sun[time-1]-self.battery_stock[time-1]*0.0625)
 
     def update_battery_stock(self, time,load):
             if abs(load) > self.max_load:
