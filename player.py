@@ -21,17 +21,16 @@ class Player:
             # TO DO:
             # implement your policy here to return the load charged / discharged in the battery
             # below is a simple example
-            
-        if time==0:
-            return 0
         
-        elif self.prices["sale"][time-1]>0.07 : # si les prix sont eleves
-            return(-self.max_load) # on vend tout
-            
-        else : # la demande est satisfaite et les prix sont bas
-            return 0.5*self.max_load # on stocke 
-            
-        return (0)
+        #A la fin du jour on vend à fond    
+        if time>=40 and time<=44:
+            return(-self.battery_stock[time]-self.sun[time-1])
+        elif time<=12 or time>=44:
+            return(self.max_load)
+        
+        #Sinon on vend ce qu'on produit plus 1/16 de nos batteries (car 16 pas de temps
+        #le jour)    
+        return (-self.sun[time-1]-self.battery_stock[time]*0.0625)
 
     def update_battery_stock(self, time,load):
             if abs(load) > self.max_load:
