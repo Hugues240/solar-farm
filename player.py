@@ -26,18 +26,18 @@ class Player:
                 
         #Pendant le jour on vend la moitié de ce qu'on produit et un peu de la batterie               
         if time>=12 and time<=40 and time>1 and self.grid_relative_load[time-2]<-50:
-            return ((-self.battery_stock[time-1]/16)/2)
+            return (-self.max_load/5)
         
         #pendant la nuit si le grid est déséquilibré on vend de la batterie    
         elif (time<=12 or time>=44) and time>1 and self.grid_relative_load[time-2]>180:
-            return(-self.battery_stock[time-1]/16)
+            return(-self.max_load/5)
             
         elif (time<=12 or time>=44) and time>1:
-            return(self.battery_stock[time-1]/16)
+            return(self.max_load/5)
         
         #Sinon on vend ce qu'on produit plus 1/16 de nos batteries (car 16 pas de temps
         #le jour)    
-        return (-self.battery_stock[time-1]*0.0625)
+        return (-self.max_load/5)
                 
 
     def update_battery_stock(self, time,load):
