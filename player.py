@@ -24,12 +24,16 @@ class Player:
             # implement your policy here to return the load charged / discharged in the battery
             # below is a simple example
                 
-        #A la fin du jour on vend à fond                
-        if time>=12 and time<=40:
+        #Pendant le jour on vend la moitié de ce qu'on produit et un peu de la batterie               
+        if time>=12 and time<=40 and self.grid_relative_load[time-2]<-50:
             return ((-self.sun[time-1]-self.battery_stock[time-1]/16)/2)
-            
+        
+        #pendant la nuit si le grid est déséquilibré on vend de la batterie    
         elif time<=12 or time>=44 and time>1 and self.grid_relative_load[time-2]>180:
             return(-self.battery_stock[time-1]/16)
+            
+        elif time<=12 or time>=44:
+            return(self.battery_stock[time-1]/16)
         
         #Sinon on vend ce qu'on produit plus 1/16 de nos batteries (car 16 pas de temps
         #le jour)    
