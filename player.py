@@ -25,7 +25,7 @@ class Player:
             # below is a simple example
                 
         #A la fin du jour on vend à fond                
-        if time>=12 and time<=40 and self.grid_relative_load[time-1]<-50:
+        if time>=12 and time<=40:
             return ((-self.sun[time-1]-self.battery_stock[time-1]/16)/2)
             
         elif time<=12 or time>=44 and time>1 and self.grid_relative_load[time-2]>180:
